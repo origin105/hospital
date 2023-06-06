@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<title>Dashboard Template for Bootstrap</title>
+		<!-- Bootstrap core CSS -->
+		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+		<!-- Custom styles for this template -->
+		<link th:href="@{/css/dashboard.css}" rel="stylesheet">
+		<style type="text/css">
+			/* Chart.js */
+
+			@-webkit-keyframes chartjs-render-animation {
+				from {
+					opacity: 0.99
+				}
+				to {
+					opacity: 1
+				}
+			}
+
+			@keyframes chartjs-render-animation {
+				from {
+					opacity: 0.99
+				}
+				to {
+					opacity: 1
+				}
+			}
+
+			.chartjs-render-monitor {
+				-webkit-animation: chartjs-render-animation 0.001s;
+				animation: chartjs-render-animation 0.001s;
+			}
+		</style>
+
+		<script language="JavaScript">
+			function startTime()
+			{
+				var today=new Date();//定义日期对象
+				var yyyy = today.getFullYear();//通过日期对象的getFullYear()方法返回年
+				var MM = today.getMonth()+1;//通过日期对象的getMonth()方法返回年
+				var dd = today.getDate();//通过日期对象的getDate()方法返回年
+				var hh=today.getHours();//通过日期对象的getHours方法返回小时
+				var mm=today.getMinutes();//通过日期对象的getMinutes方法返回分钟
+				var ss=today.getSeconds();//通过日期对象的getSeconds方法返回秒
+				// 如果分钟或小时的值小于10，则在其值前加0
+				MM=checkTime(MM);
+				dd=checkTime(dd);
+				mm=checkTime(mm);
+				ss=checkTime(ss);
+				var day; //用于保存星期（getDay()方法得到星期编号）
+				if(today.getDay()===0)   day   =   "星期日 "
+				if(today.getDay()===1)   day   =   "星期一 "
+				if(today.getDay()===2)   day   =   "星期二 "
+				if(today.getDay()===3)   day   =   "星期三 "
+				if(today.getDay()===4)   day   =   "星期四 "
+				if(today.getDay()===5)   day   =   "星期五 "
+				if(today.getDay()===6)   day   =   "星期六 "
+				document.getElementById('nowDateTimeSpan').innerHTML=yyyy+"-"+MM +"-"+ dd +" " + hh+":"+mm+":"+ss+"   " + day;
+				setTimeout('startTime()',1000);//每一秒中重新加载startTime()方法
+			}
+
+			function checkTime(i)
+			{
+				if (i<10){
+					i="0" + i;
+				}
+				return i;
+			}
+		</script>
+	</head>
+
+	<body onload="startTime()">
+		<!--顶部导航栏-->
+		<div th:replace="~{commons/commons.html::topbar}"></div>
+
+		<div class="container-fluid">
+			<div class="row">
+				<!--侧边栏-->
+				<!--传递参数-->
+				<div th:replace="~{commons/commons.html::sidebar2(active2='2')}"></div>
+
+				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+					<div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+						<div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+							<div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+						</div>
+						<div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+							<div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+						</div>
+					</div>
+					<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+						<h1 class="h2" th:text="${deptName}"></h1>
+						<span><span id="nowDateTimeSpan"></span></span>
+					</div>
+					<div class="table-responsive">
+						<table class="table table-striped table-sm">
+							<thead>
+							<tr>
+								<th>部门ID</th>
+								<th>部门名称</th>
+								<th>部门类型</th>
+								<th>部门注释</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr th:each="dept:${department}">
+								<td th:text="${dept.getId()}"></td>
+								<td th:text="${dept.getName()}"></td>
+								<td th:text="${dept.getType()}"></td>
+								<td th:text="${dept.getRemark()}"></td>
+								<td>
+									<a class="btn btn-sm btn-primary" th:href="@{'/changedept/' + ${dept.getId()}}">修改</a>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+
+
+
+				</main>
+			</div>
+		</div>
+
+		<!-- Bootstrap core JavaScript
+    ================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script type="text/javascript" th:src="@{/js/jquery-3.2.1.slim.min.js}" ></script>
+		<script type="text/javascript" th:src="@{/js/popper.min.js}" ></script>
+		<script type="text/javascript" th:src="@{/js/bootstrap.min.js}" ></script>
+
+		<!-- Icons -->
+		<script type="text/javascript" th:src="@{/js/feather.min.js}" ></script>
+		<script>
+			feather.replace()
+		</script>
+
+		<!-- Graphs -->
+		<script type="text/javascript" th:src="@{/js/Chart.min.js}" ></script>
+
+	</body>
+
+</html>

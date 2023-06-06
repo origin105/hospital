@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>医院挂号系统</title>
+		<!-- Bootstrap core CSS -->
+		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+		<!-- Custom styles for this template -->
+		<link th:href="@{/css/signin.css}" rel="stylesheet">
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+	</head>
+
+	<body class="text-center">
+		<form class="form-signin" th:action="@{/user/login}">
+			<img class="mb-4" th:src="@{/img/bootstrap-solid.svg}" alt="" width="72" height="72">
+			<h1 class="h3 mb-3 font-weight-normal">请登录</h1>
+			<p style="color: red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
+			<label class="sr-only">用户名</label>
+			<input type="text" name="name" class="form-control" placeholder="用户名" required="" autofocus="">
+			<label class="sr-only">密码</label>
+			<input type="password" name="password" class="form-control" placeholder="密码" required="">
+			<label class="sr-only">身份</label>
+			<select id="basic" name="identity" class="form-control" style="height: 45px">
+				<option data-th-hidden="true" value="" disabled>请选择</option>
+				<option value="1">病人</option>
+				<option value="2">医生</option>
+			</select>
+			<div class="checkbox mb-3">
+				<label>
+          			<input type="checkbox" value="remember-me"> 保存密码
+        		</label>
+			</div>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+			<p class="mt-5 mb-3 text-muted">© 2022-2023</p>
+			<a class="btn btn-sm" href="logon.html">患者注册</a>
+			<a class="btn btn-sm" href="logonD.html">医生注册</a>
+		</form>
+
+	</body>
+
+</html>
